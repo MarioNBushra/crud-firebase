@@ -65,6 +65,31 @@ router.post("/api/upload", upload, async (req, res) => {
       res.send(error.message);
     }
   });
+
+  router.put("/api/user/:id", async(req, res) => {
+    try {
+      let a = db.collection("users");
+      let docRef = a.doc(req.params.id);
+      const newUser = await docRef.update({
+        ...req.body
+      })
+      res.send({ msg: "Edited Successfully" });
+    } catch (error) {
+      res.status(400).send(error.message)
+    }
+  })
+
+  router.delete("/api/user/:id", async(req, res) => {
+    try {
+      let a = db.collection("users");
+      let docRef = a.doc(req.params.id);
+      const deletedUser = await docRef.delete()
+      res.send({ msg: "Deleted Successfully" });
+      
+    } catch (error) {
+      res.status(400).send(error.message)
+    }
+  })
   
   ///// G E T   A L L   U S E R S /////
   router.get("/api/users", async (req, res) => {
@@ -98,6 +123,8 @@ router.post("/api/upload", upload, async (req, res) => {
       res.send(error.message);
     }
   });
+
+
   
   //////////////////// E N D   S E T U P   A P I s ////////////////////
   
